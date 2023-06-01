@@ -7,4 +7,3 @@ After logout and login next user data will be load.
 It is written by Type Script.
 Used ant design.
 Test case is pending.
-Another thing toggle between Dashboard and Blog link pending.
