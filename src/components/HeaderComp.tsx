@@ -10,8 +10,8 @@ export const HeaderComp = () => {
     const history = useNavigate();
 
     const logoutHandler = () => {
-        history('/');
        dispatch(logout);
+       history('/');
     }
     
     return (

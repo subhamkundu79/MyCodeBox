@@ -1,9 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { Link } from 'react-router-dom';
-import { PostContext } from '../Context/postContext';
-import { getPostContext } from '../Context/getPostContext';
-import EditPage from '../screens/EditPage/EditPage';
+
 
 export const Posts = (post:any) => {
     const title = post.title;
