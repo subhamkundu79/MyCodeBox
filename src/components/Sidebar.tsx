@@ -25,7 +25,7 @@ export const Sidebar = ({showView}) => {
             } 
           });
     } 
-    
+    const address = user.address;
     return (
         <>
           <div className='hello'>Hello</div>
@@ -33,6 +33,11 @@ export const Sidebar = ({showView}) => {
            <p>{user.email}</p>
            <p>{user.phone}</p>
            <p>{user.website}</p>
+           <hr/>
+           <p>{address.street}</p>
+           <p>{address.suite}</p>
+           <p>{address.city}</p>
+           <p>{address.zipcode}</p>
            <hr/>
            <a  onClick={() => showView("dashboard")}>Dashboard</a>
            <div className='hello'>Overview</div>
