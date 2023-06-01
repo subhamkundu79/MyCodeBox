@@ -73,8 +73,8 @@ const EditPage: React.FC = () => {
                     <Button type="primary" htmlType="submit">
                     Edit
                     </Button>
-                    <Button htmlType="button" onClick={onDelete}>
-                    Delete
+                    <Button type="primary" htmlType="submit" onClick={onDelete} className="leftSpace">
+                     Delete
                     </Button>
                     
                 </Form.Item>
