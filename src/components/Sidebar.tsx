@@ -3,13 +3,9 @@ import React, {  useEffect, useState } from 'react';
 import { QDB_HOST } from '../types/envconstants';
 
 
-export const Sidebar = ({showView}) => {
+export const Sidebar = (props:any) => {
     
-    useEffect(() => {
-       getUserDetails() 
-        
-    }, []);
-    const [user,setUser]  = useState(Object);
+    const [user,setUser]  = useState({});
     
     const getUserDetails = async () => {
         const id = sessionStorage.getItem("id");
@@ -25,7 +21,15 @@ export const Sidebar = ({showView}) => {
             } 
           });
     } 
-    const address = user.address;
+    useEffect(() => {
+       getUserDetails() 
+    }, []);
+   
+    let address = {}
+    if(user.hasOwnProperty('address')) {
+        address = user.address;
+    } 
+    
     return (
         <>
           <div className='hello'>Hello</div>
@@ -37,15 +41,15 @@ export const Sidebar = ({showView}) => {
            <p>{address.street}</p>
            <p>{address.suite}</p>
            <p>{address.city}</p>
-           <p>{address.zipcode}</p>
-           <hr/>
-           <a  onClick={() => showView("dashboard")}>Dashboard</a>
+           <p>{address.zipcode}</p> 
+           <hr/> 
+           <a  onClick={() => props.showView("dashboard")}>Dashboard</a>
            <div className='hello'>Overview</div>
            <div className='hello'>Calander</div>
            <div className='hello'>Scheduled Action</div>
            <div className='hello'>Live Alert</div>
            <hr/>
-           <a  onClick={() => showView("blog")}>Blog</a>
+           <a  onClick={() => props.showView("blog")}>Blog</a>
            <div className='hello'>All</div>
            <div className='hello'>Latest</div>
            <div className='hello'>Archived</div>
