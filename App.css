@@ -83,3 +83,22 @@
 .leftSpace {
   margin-left: 10px;
 }
+
+.pagination-bar {
+  position: relative;
+  left: 30%;
+}
+.qdbLabel {
+  color: gainsboro;
+  margin-left: -92px;
+  margin-top: 14px;
+  font-size: 13px;
+}
+
+.post-header {
+  display: flex;
+  flex-direction: row;
+  float: left;
+  margin:  11px 19px;
+  gap: 9px;
+}
