@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Layout, Menu, theme } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { Dispatch } from "redux"
 import { getAllblogPosts } from "../../actions/getAllPosts"; 
 import { RootState } from '../../reducers/index'
 import { Posts } from "../../components/Posts";
-import { PaginationComp } from "../../components/Pagination";
+import  PaginationComp  from "../../components/Pagination";
 import { Sidebar } from "../../components/Sidebar";
 import { HeaderComp } from "../../components/HeaderComp";
+import { Link } from "react-router-dom";
 
+let PageSize = 3; 
 
- const LandingPage:React.FunctionComponent = () => {
+const LandingPage:React.FunctionComponent = () => {
     const { Header, Content, Footer, Sider } = Layout;
     const [view,setView] = useState(sessionStorage.getItem("viewState"))
     const dispatch: Dispatch<any> = useDispatch();
@@ -27,7 +29,14 @@ import { HeaderComp } from "../../components/HeaderComp";
         setView(view);
     }
     
+    const [currentPage, setCurrentPage] = useState(1);
     
+    const currentTableData = useMemo(() => {
+        const firstPageIndex = (currentPage - 1) * PageSize;
+        const lastPageIndex = firstPageIndex + PageSize;
+        return blogPosts.slice(firstPageIndex, lastPageIndex);
+    }, [currentPage,blogPosts]);
+        
     return (
         <Layout>
             <Sider className="sidebar">
@@ -37,18 +46,33 @@ import { HeaderComp } from "../../components/HeaderComp";
             </Sider>
             <Layout>
                 <Header style={{ padding: 0, background: "white" }}>
-                   <HeaderComp/> 
+                   <HeaderComp viewPort={view}/> 
                 </Header>
                 {(view==="blog")?
                    <>
+                   <div className="post-header">
+                     <a>All Posts</a>
+                     <span className='hello'>Latest Posts</span>
+                     <span className='hello'>Archived</span>
+                   </div>
                    <Content style={{ margin: '24px 16px 0' }}>
-                   {blogPosts.map((post:any,indx:number) => <Posts key={blogPosts[indx].id} 
-                                                           title={blogPosts[indx].title} 
-                                                           body={blogPosts[indx].body}
-                                                           id={blogPosts[indx].id}/>
+                   
+                   {currentTableData.map((post:any,indx:number) => <Posts key={currentTableData[indx].id} 
+                                                           title={currentTableData[indx].title} 
+                                                           body={currentTableData[indx].body}
+                                                           id={currentTableData[indx].id}/>
                    )}
                    </Content>
-                   <Footer style={{ textAlign: 'center' }}><PaginationComp totalpages={NoOfPosts}/></Footer></>
+                   <Footer style={{ textAlign: 'center' }}>
+                        <div className="pagination-bar">
+                            <PaginationComp
+                                currentPage={currentPage}
+                                totalCount={NoOfPosts}
+                                pageSize={PageSize}
+                                onPageChange={(page:any) => setCurrentPage(page)}
+                            />
+                        </div>
+                   </Footer></>
                    :<>
                    <Content style={{ margin: '24px 16px 0' }}>
                        <div>Welcome to Dashboard</div>
